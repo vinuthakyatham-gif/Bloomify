@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloomify 🌸</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+{% if messages %}
+<div id="toast" class="toast show">
+    {{ messages[0] }}
+</div>
+
+<script>
+setTimeout(function() {
+    document.getElementById("toast").classList.remove("show");
+}, 2500);
+</script>
+{% endif %}
+{% endwith %}
+<nav class="navbar">
+
+    <div class="logo">
+        🌸 Bloomify
+    </div>
+
+    <div class="search-container">
+
+    <form action="/home" method="GET" class="search-box">
+        <input
+    type="text"
+    name="search"
+    value="{{ request.args.get('search', '') }}"
+    placeholder="🔍 Search flowers..."
+>
+
+        
+
+        <button type="submit" class="search-btn">🔍</button>
+
+    </form>
+
+</div>
+
+      <div class="nav-links">
+
+    <a href="/">🏠 Home</a>
+
+    <a href="#">🌸 Flowers</a>
+
+    <a href="/gifts">🎁 Gifts</a>
+
+    <a href="/wishlist">❤️ Wishlist</a>
+
+    <a href="/cart">
+🛒 Cart ({{ cart_count }})
+</a>
+<a href="/orders">📦 Orders</a>
+
+    {% if session.get("user") %}
+    <a href="/profile">👋 {{ session["user"] }}</a>
+    <a href="/logout">🚪 Logout</a>
+{% else %}
+    <a href="/login">👤 Login</a>
+{% endif %}
+
+</div>
+
+
+</nav>
+<div class="categories">
+
+    <a href="/category/Roses">
+        <button>🌹 Roses</button>
+    </a>
+
+    <a href="/category/Tulips">
+        <button>🌷 Tulips</button>
+    </a>
+
+    <a href="/category/Jasmine">
+        <button>🌼 Jasmine</button>
+    </a>
+
+    <a href="/category/Hibiscus">
+        <button>🌺 Hibiscus</button>
+    </a>
+
+    <a href="/category/Sunflowers">
+        <button>🌻 Sunflowers</button>
+    </a>
+
+</div>
+
+<div class="featured-banner">
+    <h2>🌷 Fresh Flowers Delivered in 30 Minutes</h2>
+    <p>Bring happiness to every occasion. 💖</p>
+
+    <a href="#flowers">
+        <button>🛍 Shop Now</button>
+    </a>
+</div>
+
+<h1>🌺 Bloomify 🌺</h1>
+
+<p class="tagline">
+    Feel the Bloom in Every Moment 💖
+</p>
+
+<!-- Flowers -->
+
+<h2 class="section-title">Our Beautiful Flowers 🌸</h2>
+<div class="sort-box">
+
+    <label for="sort">Sort by:</label>
+
+    <select id="sort" onchange="sortFlowers()">
+        <option value="default">Recommended</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+    </select>
+
+</div>
+
+<div class="flower-container" id="flowers">
+
+{% for name, flower in flowers.items() %}
+
+<div class="flower-card">
+
+    {% if flower.name in session.get("wishlist", []) %}
+<a href="/wishlist/{{ flower.name }}" class="wishlist" style="color:red;">❤️</a>
+{% else %}
+<a href="/wishlist/{{ flower.name }}" class="wishlist">🤍</a>
+{% endif %}
+
+<span class="badge">🔥 {{ flower.offer }}</span>
+
+<img src="/static/images/{{ flower.image }}" alt="{{ flower.name }}">
+
+    <h3>🌸 {{ flower.name }}</h3>
+
+    <div class="price-section">
+
+    <span class="old-price">
+        ₹{{ (flower.price * 100 / (100 - flower.offer.replace('% OFF', '')|int))|round|int }}
+    </span>
+
+    <span class="new-price">
+        ₹{{ flower.price }}
+    </span>
+
+</div>
+    <div class="rating">
+    {{ flower.rating }}
+    <span>({{ flower.reviews }} Reviews)</span>
+</div>
+
+    <a href="/flower-details/{{ flower.name }}" class="details-btn">
+        👀 View Details
+    </a>
+
+    <a href="/add/{{ flower.name }}">
+        <button>Add to Cart 🛒</button>
+    </a>
+
+    <a href="/buy-now/{{ flower.name }}">
+    <button>⚡ Buy Now</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- Buttons -->
+ <section class="why-bloomify">
+
+    <h2>💖 Why Choose Bloomify?</h2>
+
+    <div class="features">
+
+        <div class="feature-card">
+            🚚
+            <h3>Fast Delivery</h3>
+            <p>Fresh flowers delivered within 30 minutes.</p>
+        </div>
+
+        <div class="feature-card">
+            🌸
+             <h3>100% Fresh Flowers</h3>
+            <p>Hand-picked flowers directly from trusted farms.</p>
+        </div>
+
+        <div class="feature-card">
+            🔒
+            <h3>Secure Payment</h3>
+            <p>Safe and secure online payment methods.</p>
+        </div>
+
+        <div class="feature-card">
+            🎁
+            <h3>Perfect Gifts</h3>
+            <p>Flowers for birthdays, weddings and every celebration.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<div class="account-buttons">
+
+    <a href="/register">
+        <button>Register</button>
+    </a>
+
+    <a href="/login">
+        <button>Login</button>
+    </a>
+
+</div>
+<h2 class="section-title">💬 What Our Customers Say</h2>
+
+<div class="review-container">
+
+    <div class="review-card">
+        <h3>Saanvi</h3>
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>"The roses were so fresh! Delivery was super fast."</p>
+    </div>
+
+    <div class="review-card">
+        <h3>Vihaan</h3>
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>"Beautiful flowers. My family loved the bouquet!"</p>
+    </div>
+
+    <div class="review-card">
+        <h3>Ishita</h3>
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>"Excellent quality and amazing packaging."</p>
+    </div>
+
+</div>
+
+<!-- Footer -->
+ <footer>
+
+<div class="footer-container">
+
+    <div>
+        <h3>🌸 Bloomify</h3>
+        <p>Making every moment bloom with fresh flowers.</p>
+    </div>
+
+    <div>
+        <h4>Quick Links</h4>
+        <p><a href="/">Home</a></p>
+        <p><a href="/cart">Cart</a></p>
+        <p><a href="/checkout">Checkout</a></p>
+    </div>
+
+    <div>
+        <h4>Contact</h4>
+        <p>📞 +91 9876543210</p>
+        <p>📧 bloomify@gmail.com</p>
+        <p>📍 Hyderabad, Telangana</p>
+    </div>
+
+</div>
+
+<hr>
+
+<p class="copyright">
+    © 2026 Bloomify | All Rights Reserved 🌸
+</p>
+
+</footer>
+<script>
+function sortFlowers() {
+
+    const sort = document.getElementById("sort");
+    const container = document.getElementById("flowers");
+    const cards = Array.from(container.querySelectorAll(".flower-card"));
+
+    if (sort.value === "low") {
+        cards.sort((a, b) => {
+            const priceA = parseInt(a.querySelector(".new-price").textContent.replace("₹", ""));
+            const priceB = parseInt(b.querySelector(".new-price").textContent.replace("₹", ""));
+            return priceA - priceB;
+        });
+    }
+
+    else if (sort.value === "high") {
+        cards.sort((a, b) => {
+            const priceA = parseInt(a.querySelector(".new-price").textContent.replace("₹", ""));
+            const priceB = parseInt(b.querySelector(".new-price").textContent.replace("₹", ""));
+            return priceB - priceA;
+        });
+    }
+
+    cards.forEach(card => container.appendChild(card));
+}
+</script>
+<!-- 🌸 Bloomify Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+function showToast(message) {
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2500);
+}
+</script>
+
+</body>
+</html>

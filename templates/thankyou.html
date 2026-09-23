@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful</title>
+    <style>
+        body{
+            font-family:Arial;
+            background:#fff5f8;
+            text-align:center;
+            padding:60px;
+        }
+
+        .box{
+            background:white;
+            width:500px;
+            margin:auto;
+            padding:40px;
+            border-radius:20px;
+            box-shadow:0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        h1{
+            color:#28a745;
+        }
+
+        h2{
+            color:#d63384;
+        }
+
+        p{
+            font-size:18px;
+        }
+
+        .btn{
+            display:inline-block;
+            margin:15px;
+            padding:12px 25px;
+            background:#d63384;
+            color:white;
+            text-decoration:none;
+            border-radius:30px;
+            font-weight:bold;
+        }
+
+        .btn:hover{
+            background:#b52b6f;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🎉 Order Placed Successfully!</h1>
+
+<h2>Thank You {{ name }} ❤️</h2>
+
+<p><b>Order ID:</b> {{ order_id }}</p>
+
+<p><b>Payment:</b> {{ payment }}</p>
+
+<p>🚚 Estimated Delivery: <b>Within 30 Minutes</b></p>
+
+<p>🌸 Thank you for shopping with Bloomify.</p>
+
+<a href="/" class="btn">🏠 Back to Home</a>
+
+<a href="/orders" class="btn">📦 My Orders</a>
+
+</div>
+
+</body>
+</html>

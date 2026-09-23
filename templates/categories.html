@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ category }} - Bloomify</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🌸 Bloomify</div>
+
+    <div class="nav-links">
+        <a href="/home">🏠 Home</a>
+        <a href="/wishlist">❤️ Wishlist</a>
+        <a href="/cart">🛒 Cart</a>
+        <a href="/orders">📦 Orders</a>
+        <a href="/profile">👤 Profile</a>
+    </div>
+</nav>
+
+<h1 style="text-align:center; color:#d63384; margin-top:30px;">
+    {{ category }} Collection 🌸
+</h1>
+
+<div class="flower-container">
+
+{% if flowers %}
+
+{% for name, flower in flowers.items() %}
+
+<div class="flower-card">
+
+    <span class="badge">🔥 {{ flower.offer }}</span>
+
+    <img src="/static/images/{{ flower.image }}" alt="{{ flower.name }}">
+
+    <h3>{{ flower.name }}</h3>
+
+    <div class="price-section">
+        <span class="new-price">₹{{ flower.price }}</span>
+    </div>
+
+    <div class="rating">
+        {{ flower.rating }}
+        <span>({{ flower.reviews }} Reviews)</span>
+    </div>
+
+    <a href="/flower-details/{{ flower.name }}" class="details-btn">
+        👀 View Details
+    </a>
+
+    <a href="/add/{{ flower.name }}">
+        <button>Add to Cart 🛒</button>
+    </a>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<h2 style="text-align:center; color:gray;">
+    😔 No flowers available in this category.
+</h2>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+
+<body>
+    <div class="profile-card">
+
+<h2>👤 My Profile</h2>
+
+<img src="{{ url_for('static', filename='images/' + image) }}">
+
+<div class="profile-info">
+
+<p><b>👤 Name :</b> {{ user }}</p>
+
+<p><b>📦 Orders :</b> {{ order_count }}</p>
+
+<p><b>❤️ Wishlist :</b> {{ wishlist_count }}</p>
+
+<p><b>🛒 Cart :</b> {{ cart_count }}</p>
+
+<p class="address-title"><b>📍 Address</b></p>
+
+<form action="/save_address" method="POST">
+
+<textarea name="address">{{ address }}</textarea>
+
+<br><br>
+
+<button type="submit">💾 Save Address</button>
+
+</form>
+
+</div>
+
+<div class="profile-buttons">
+
+    <a href="/edit_profile">
+        <button type="button">✏️ Edit Profile</button>
+    </a>
+
+    <a href="/orders">
+        <button type="button">📦 My Orders</button>
+    </a>
+
+    <a href="/wishlist">
+        <button type="button">❤️ Wishlist</button>
+    </a>
+
+    <a href="/home">
+        <button type="button">🏠 Home</button>
+    </a>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

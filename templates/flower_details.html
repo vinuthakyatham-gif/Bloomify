@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Details - Bloomify</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+.details-container > img {
+    width: 400px;
+    height: 400px;
+    object-fit: contain;
+    display: block;
+    margin: 20px auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="details-container">
+
+    <img src="/static/images/{{ flower.image }}" alt="{{ flower.name }}">
+
+<h1>{{ flower.name }}</h1>
+
+<h2 style="color:#d63384;">₹{{ flower.price }}</h2>
+
+       <p>
+    {{ flower.description }}
+</p>  
+
+        <p style="color:green;font-weight:bold;">
+            🚚 Free Delivery
+        </p>
+
+        <p style="color:#ff6b35;font-weight:bold;">
+            ⚡ Only 5 Left
+        </p>
+
+        <a href="/add/{{ flower.name }}">
+    <button>Add to Cart 🛒</button>
+</a>
+        <br><br>
+
+        <a href="/">⬅ Back to Home</a>
+
+    </div>
+
+</div>
+
+<hr>
+<h2>⭐ Customer Reviews</h2>
+
+{% for review in reviews %}
+
+<div class="review-card">
+
+<h3>{{ review.name }}</h3>
+
+<p>{{ review.rating }}</p>
+
+<p>{{ review.comment }}</p>
+
+</div>
+
+{% endfor %}
+
+<h2>⭐ Write a Review</h2>
+
+<form action="/review/{{ flower.name }}" method="POST">
+
+<input
+type="text"
+name="name"
+placeholder="Your Name"
+required>
+
+<select name="rating">
+    <option value="5">⭐⭐⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐☆</option>
+    <option value="3">⭐⭐⭐☆☆</option>
+    <option value="2">⭐⭐☆☆☆</option>
+    <option value="1">⭐☆☆☆☆</option>
+</select>
+
+
+<br><br>
+
+<textarea
+name="comment"
+placeholder="Write your review"
+required>
+</textarea>
+
+<br><br>
+
+<button type="submit">
+Submit Review ⭐
+</button>
+
+</form>
+
+</body>
+</html>

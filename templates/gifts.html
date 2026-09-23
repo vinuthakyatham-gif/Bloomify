@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bloomify Gifts</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#fff5f8;
+            margin:0;
+        }
+
+        h1{
+            text-align:center;
+            color:#d63384;
+            margin-top:30px;
+        }
+
+        .container{
+            display:flex;
+            justify-content:center;
+            flex-wrap:wrap;
+            gap:30px;
+            padding:40px;
+        }
+
+        .card{
+            width:250px;
+            background:white;
+            border-radius:15px;
+            box-shadow:0 5px 15px rgba(0,0,0,.15);
+            text-align:center;
+            transition:.3s;
+            padding:20px;
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+        }
+
+        img{
+            width:180px;
+            height:180px;
+            object-fit:cover;
+            border-radius:12px;
+        }
+
+        h2{
+            color:#d63384;
+        }
+
+        h3{
+            color:#444;
+        }
+
+        button{
+            padding:12px 25px;
+            border:none;
+            border-radius:30px;
+            background:#d63384;
+            color:white;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#b81d6a;
+        }
+
+        .back{
+            display:block;
+            text-align:center;
+            margin:30px;
+        }
+
+        .back a{
+            text-decoration:none;
+            color:white;
+            background:#d63384;
+            padding:12px 25px;
+            border-radius:25px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>🎁 Gift Collection 🎁</h1>
+
+<div class="container">
+
+{% for gift in gifts.values() %}
+
+<div class="card">
+
+<img src="{{ url_for('static', filename='images/' + gift.image) }}">
+
+<h2>{{ gift.name }}</h2>
+
+<h3>₹{{ gift.price }}</h3>
+
+<a href="{{ url_for('add_to_cart', flower=gift.name) }}">
+    <button>Add to Cart 🛒</button>
+</a>
+</div>
+
+{% endfor %}
+
+</div>
+
+<div class="back">
+<a href="/home">🏠 Home</a>
+</div>
+
+</body>
+</html>

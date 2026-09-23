@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - Bloomify</title>
+</head>
+
+<body style="background:#fff0f5; text-align:center;">
+
+<h1 style="color:#d63384;">🌸 Checkout 🌸</h1>
+<h2 style="color:#d63384;">🛒 Order Summary</h2>
+
+{% for flower in flowers %}
+
+<div style="
+background:white;
+width:300px;
+margin:15px auto;
+padding:15px;
+border-radius:15px;
+box-shadow:0 4px 10px lightgray;">
+
+<img src="/static/images/{{ flower.image }}" width="100">
+
+<h3>{{ flower.name }}</h3>
+
+<p>
+Quantity: {{ flower.get('quantity', 1) }}
+</p>
+
+<p style="color:#d63384; font-weight:bold;">
+₹{{ flower.price * flower.get('quantity', 1) }}
+</p>
+
+</div>
+
+{% endfor %}
+
+<h2 style="color:#d63384;">
+💰 Total Amount: ₹{{ total }}
+</h2>
+<p>🎉 Discount: {{ discount }}%</p>
+
+<h2>💰 Final Total: ₹{{ final_total }}</h2>
+<h3>🎁 Apply Coupon</h3>
+
+<form action="/apply_coupon" method="POST">
+    <input
+        type="text"
+        name="coupon"
+        placeholder="Enter Coupon Code">
+
+    <button type="submit">
+        Apply Coupon
+    </button>
+</form>
+
+<br>
+
+<hr style="width:350px;">
+<br>
+
+<form action="/placeorder" method="post">
+
+<input type="text" name="name" placeholder="Full Name" required><br><br>
+
+<input type="text" name="phone" placeholder="Phone Number" required><br><br>
+
+<textarea name="address" placeholder="Delivery Address" rows="4" cols="30" required></textarea><br><br>
+<label><b>Select Payment Method</b></label><br><br>
+
+<input type="radio" name="payment" value="Cash on Delivery" required>
+Cash on Delivery 💵<br><br>
+
+<input type="radio" name="payment" value="UPI">
+UPI 📱<br><br>
+
+<input type="radio" name="payment" value="Credit/Debit Card">
+Credit / Debit Card 💳<br><br>
+
+<button type="submit">
+🌷 Place Order
+</button>
+
+</form>
+
+</body>
+</html>
