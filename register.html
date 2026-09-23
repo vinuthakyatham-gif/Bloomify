@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - Bloomify</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="form-container">
+
+<h1>🌸 Create Account</h1>
+
+<form action="/register" method="POST">
+
+<input type="text" name="name" placeholder="Full Name" required>
+
+<input type="email" name="email" placeholder="Email" required>
+
+<input type="password" name="password" placeholder="Password" required>
+
+<select name="gender">
+    <option>Male</option>
+    <option>Female</option>
+</select>
+
+<button type="submit">Register</button>
+
+</form>
+
+<p>
+Already have an account?
+<a href="/login">Login</a>
+</p>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order History</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🌸 Bloomify
+    </div>
+
+    <div class="nav-links">
+        <a href="/home">🏠 Home</a>
+        <a href="/cart">🛒 Cart</a>
+        <a href="/wishlist">❤️ Wishlist</a>
+    </div>
+
+</nav>
+
+<div class="orders-container">
+
+    <h1>📦 Order History</h1>
+
+    {% if orders %}
+
+        {% for order in orders %}
+<div class="order-card">
+
+    <h3>Order ID: {{ order.order_id }}</h3>
+
+    <p><b>Name:</b> {{ order.name }}</p>
+
+    <p><b>📞 Phone:</b> {{ order.phone }}</p>
+
+    <p><b>📍 Address:</b> {{ order.address }}</p>
+
+    <p><b>Payment:</b> {{ order.payment }}</p>
+
+    <p><b>Total:</b> ₹{{ order.total }}</p>
+
+    <p>
+                <b>Status:</b>
+                <span class="order-status">
+    {% if order.status == "Cancelled" %}
+        ❌ {{ order.status }}
+    {% else %}
+        ✅ {{ order.status }}
+    {% endif %}
+</span>
+            </p>
+
+ {% if order.status == "Cancelled" %}
+
+    <div class="cancelled-tracking">
+        ❌
+        <span>Order Cancelled</span>
+    </div>
+
+{% else %}
+
+    <div class="tracking">
+
+        <div class="{% if order.status in ['Order Placed', 'Shipped', 'Out for Delivery', 'Delivered'] %}active{% endif %}">
+            📦
+            <span>Order Placed</span>
+        </div>
+
+        <div class="{% if order.status in ['Shipped', 'Out for Delivery', 'Delivered'] %}active{% endif %}">
+            🚚
+            <span>Shipped</span>
+        </div>
+
+        <div class="{% if order.status in ['Out for Delivery', 'Delivered'] %}active{% endif %}">
+            📍
+            <span>Out for Delivery</span>
+        </div>
+
+        <div class="{% if order.status == 'Delivered' %}active{% endif %}">
+            ✅
+            <span>Delivered</span>
+        </div>
+
+    </div>
+
+{% endif %}   
+
+<div class="status-buttons">
+
+    {% if order.status == "Order Placed" %}
+
+        <a href="/update_order/{{ order.order_id }}/Shipped">
+            🚚 Mark as Shipped
+        </a>
+
+        <a href="/update_order/{{ order.order_id }}/Cancelled"
+           onclick="return confirm('Are you sure you want to cancel this order?')">
+            ❌ Cancel Order
+        </a>
+
+    {% elif order.status == "Shipped" %}
+
+        <a href="/update_order/{{ order.order_id }}/Out%20for%20Delivery">
+            📍 Out for Delivery
+        </a>
+
+    {% elif order.status == "Out for Delivery" %}
+
+        <a href="/update_order/{{ order.order_id }}/Delivered">
+            ✅ Mark as Delivered
+        </a>
+
+    {% elif order.status == "Delivered" %}
+
+        <p>🎉 Order Delivered Successfully!</p>
+
+    {% endif %}
+
+</div>
+            <hr>
+
+            <div class="order-items">
+                {% for item in order_items[order.id] %}
+
+<p class="order-item">
+    🌸 {{ item.product_name }}
+    × {{ item.quantity }}
+    - ₹{{ item.price }}
+</p>
+
+{% endfor %}
+
+                
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <h2 class="no-orders">
+            No Orders Yet 😔
+        </h2>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
